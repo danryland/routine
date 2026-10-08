@@ -1,0 +1,25 @@
+{
+  "dates": ["23 Aug 2024", "24 Aug 2024", "25 Aug 2024", "26 Aug 2024", "27 Aug 2024", "28 Aug 2024", "29 Aug 2024"],
+  "tasks": [
+    { "name": "Teeth AM", "completed": ["26 Aug 2024", "27 Aug 2024"] },
+    { "name": "SPF", "completed": ["28 Aug 2024", "28 Aug 2024"] },
+    {
+      "name": "Water x6",
+      "completed": [
+        { "date": "26 Aug 2024", "times": 1 },
+        { "date": "27 Aug 2024", "times": 2 },
+        { "date": "28 Aug 2024", "times": 6 }
+      ],
+      "target": 6
+    },
+    { "name": "Lowered target", "completed": [{ "date": "27 Aug 2024", "times": 5 }], "target": 3 },
+    { "name": "Typed target", "completed": [{ "date": "27 Aug 2024", "times": 2 }], "target": "4" },
+    {
+      "name": "Cleared target",
+      "completed": [{ "date": "27 Aug 2024", "times": 2 }, { "date": "28 Aug 2024", "times": 0 }],
+      "target": ""
+    },
+    { "name": "Garbage", "completed": ["yesterday", 42, null, { "date": "31 Feb 2024", "times": 1 }] },
+    { "completed": [] }
+  ]
+}

@@ -1,0 +1,36 @@
+name: Native apps
+
+on:
+  push:
+    paths: ["ios/**", "android/**", "fixtures/**", ".github/workflows/native-apps.yml"]
+  pull_request:
+    paths: ["ios/**", "android/**", "fixtures/**", ".github/workflows/native-apps.yml"]
+
+jobs:
+  ios:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Core tests
+        working-directory: ios
+        run: swift test
+      - name: Build app
+        run: |
+          xcodebuild build \
+            -project ios/Routine.xcodeproj \
+            -scheme Routine \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Core tests, build and lint
+        working-directory: android
+        run: ./gradlew :core:test :app:assembleDebug :app:lintDebug
