@@ -16,16 +16,29 @@ class RoutineStore(
     private val file: File,
     private val legacyJson: () -> String? = { null },
 ) {
+    enum class Origin {
+        /** Read from this app's own file. */
+        Saved,
+        /** Imported from the original Capacitor app on this first launch. */
+        ImportedFromLegacyApp,
+        /** Nothing saved anywhere: a brand-new routine. */
+        New,
+    }
+
+    data class Loaded(val routine: Routine, val origin: Origin)
+
+    fun load(today: LocalDate): Routine = loadReportingOrigin(today).routine
+
     /**
      * Loads the saved routine, migrating legacy data if there's no file yet.
      *
      * A file that can't be read is moved aside rather than overwritten, so a
      * bug or a newer app version's format never silently destroys history.
      */
-    fun load(today: LocalDate): Routine {
+    fun loadReportingOrigin(today: LocalDate): Loaded {
         if (file.exists()) {
             try {
-                return RoutineJson.decode(file.readText())
+                return Loaded(RoutineJson.decode(file.readText()), Origin.Saved)
             } catch (e: RoutineFormatException) {
                 quarantineUnreadableFile()
             } catch (e: IOException) {
@@ -36,9 +49,9 @@ class RoutineStore(
         if (migrated != null) {
             // The legacy data is left in place as a fallback; it's never written again.
             runCatching { save(migrated) }
-            return migrated
+            return Loaded(migrated, Origin.ImportedFromLegacyApp)
         }
-        return Routine(startDate = today)
+        return Loaded(Routine(startDate = today), Origin.New)
     }
 
     /** Writes atomically: a crash mid-save leaves the previous file intact. */

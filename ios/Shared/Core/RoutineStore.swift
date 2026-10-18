@@ -14,14 +14,27 @@ struct RoutineStore {
         )
     }
 
+    enum Origin: Equatable {
+        /// Read from this app's own file.
+        case saved
+        /// Imported from the original Capacitor app on this first launch.
+        case importedFromLegacyApp
+        /// Nothing saved anywhere: a brand-new routine.
+        case new
+    }
+
+    func load(today: Day) -> Routine {
+        loadReportingOrigin(today: today).routine
+    }
+
     /// Loads the saved routine, migrating legacy data if there's no file yet.
     ///
     /// A file that can't be read is moved aside rather than overwritten, so a
     /// bug or a newer app version's format never silently destroys history.
-    func load(today: Day) -> Routine {
+    func loadReportingOrigin(today: Day) -> (routine: Routine, origin: Origin) {
         if let data = try? Data(contentsOf: fileURL) {
             do {
-                return try Routine.decode(from: data)
+                return (try Routine.decode(from: data), .saved)
             } catch {
                 quarantineUnreadableFile()
             }
@@ -30,9 +43,14 @@ struct RoutineStore {
            let migrated = LegacyImport.routine(fromJSON: json, today: today) {
             // The legacy key is left in place as a fallback; it's never written again.
             try? save(migrated)
-            return migrated
+            return (migrated, .importedFromLegacyApp)
         }
-        return Routine(startDate: today)
+        return (Routine(startDate: today), .new)
+    }
+
+    /// When the file was last written, by the app or the widget.
+    var lastModified: Date? {
+        (try? FileManager.default.attributesOfItem(atPath: fileURL.path))?[.modificationDate] as? Date
     }
 
     func save(_ routine: Routine) throws {

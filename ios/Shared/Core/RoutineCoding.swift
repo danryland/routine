@@ -91,3 +91,17 @@ extension Routine: Codable {
         return try encoder.encode(self)
     }
 }
+
+extension Routine {
+    /// Reads a backup file: this app's own format, or a copy of the original
+    /// app's saved data. Returns nil if it's neither.
+    static func restoring(from data: Data, today: Day) -> Routine? {
+        if let routine = try? decode(from: data) {
+            return routine
+        }
+        // Any JSON object "imports" as an empty legacy routine, so insist on habits.
+        return String(data: data, encoding: .utf8)
+            .flatMap { LegacyImport.routine(fromJSON: $0, today: today) }
+            .flatMap { $0.habits.isEmpty ? nil : $0 }
+    }
+}
