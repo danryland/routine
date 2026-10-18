@@ -8,17 +8,23 @@ import wales.ryland.routine.core.Routine
 @Preview(name = "Routine", widthDp = 393, heightDp = 852, showBackground = true, backgroundColor = 0xFF150107)
 @Composable
 private fun RoutinePreview() {
-    RoutineTheme { RoutineApp(sampleRoutineState(), NoRoutineActions) }
+    RoutineApp(sampleRoutineState(), NoRoutineActions, NoAppActions)
 }
 
 @Preview(name = "Empty", widthDp = 393, heightDp = 852, showBackground = true, backgroundColor = 0xFF150107)
 @Composable
 private fun EmptyPreview() {
-    RoutineTheme { RoutineApp(RoutineUiState(Routine(startDate = LocalDate.now()), LocalDate.now()), NoRoutineActions) }
+    RoutineApp(RoutineUiState(Routine(startDate = LocalDate.now()), LocalDate.now()), NoRoutineActions, NoAppActions)
 }
 
-@Preview(name = "Edit habits", widthDp = 393, heightDp = 852, showBackground = true, backgroundColor = 0xFF150107)
+@Preview(name = "Stats", widthDp = 393, heightDp = 852, showBackground = true, backgroundColor = 0xFF150107)
 @Composable
-private fun EditPreview() {
-    RoutineTheme { EditHabitsScreen(sampleRoutineState().routine.habits, NoRoutineActions, onDone = {}) }
+private fun StatsPreview() {
+    RoutineTheme { StatsScreen(sampleRoutineState(), onBack = {}, onUnlock = {}) }
+}
+
+@Preview(name = "Settings", widthDp = 393, heightDp = 852, showBackground = true, backgroundColor = 0xFF150107)
+@Composable
+private fun SettingsPreview() {
+    RoutineTheme { SettingsScreen(sampleRoutineState(isUnlocked = false), NoRoutineActions, NoAppActions, onBack = {}, onLocked = {}) }
 }

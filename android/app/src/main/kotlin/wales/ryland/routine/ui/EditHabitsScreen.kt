@@ -72,10 +72,11 @@ private val EditRowSpacing = 8.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditHabitsScreen(habits: List<Habit>, actions: RoutineActions, onDone: () -> Unit) {
+    val palette = LocalPalette.current
     var pendingDelete by remember { mutableStateOf<Habit?>(null) }
 
     Scaffold(
-        containerColor = RoutineColors.Background,
+        containerColor = palette.background,
         topBar = {
             Column {
                 TopAppBar(
@@ -84,9 +85,9 @@ fun EditHabitsScreen(habits: List<Habit>, actions: RoutineActions, onDone: () ->
                         IconButton(onClick = onDone) { Icon(RoutineIcons.ArrowBack, contentDescription = "Back") }
                     },
                     actions = { TextButton(onClick = onDone) { Text("Done") } },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = RoutineColors.Background),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = palette.background),
                 )
-                HorizontalDivider(color = RoutineColors.Maroon)
+                HorizontalDivider(color = palette.track)
             }
         },
     ) { padding ->
@@ -125,7 +126,7 @@ fun EditHabitsScreen(habits: List<Habit>, actions: RoutineActions, onDone: () ->
                 TextButton(onClick = {
                     actions.delete(habit.id)
                     pendingDelete = null
-                }) { Text("Delete", color = RoutineColors.Rose) }
+                }) { Text("Delete", color = palette.accent) }
             },
             dismissButton = {
                 TextButton(onClick = { pendingDelete = null }) { Text("Cancel") }
@@ -211,13 +212,14 @@ private fun EditHabitRow(
     handleModifier: Modifier,
     modifier: Modifier = Modifier,
 ) {
+    val palette = LocalPalette.current
     var name by remember(habit.id) { mutableStateOf(habit.name) }
     Row(
         modifier
             .fillMaxWidth()
             .height(EditRowHeight)
             .clip(RoundedCornerShape(12.dp))
-            .background(RoutineColors.Raised)
+            .background(palette.raised)
             .semantics { customActions = moveActions },
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -251,13 +253,14 @@ private fun EditHabitRow(
 
 @Composable
 private fun GoalChip(goal: Int, onSetGoal: (Int) -> Unit) {
+    val palette = LocalPalette.current
     var expanded by remember { mutableStateOf(false) }
     val options = remember(goal) { (1..20).toList().let { if (goal in it) it else it + goal } }
     Box {
         Surface(
             onClick = { expanded = true },
             shape = CircleShape,
-            color = RoutineColors.Maroon,
+            color = palette.track,
             contentColor = Color.White,
             modifier = Modifier.semantics { contentDescription = "Daily goal: ${goalLong(goal)}" },
         ) {

@@ -84,6 +84,7 @@ fun RoutineGrid(
     onTap: (habitId: String, day: LocalDate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val palette = LocalPalette.current
     val routine = state.routine
     val haptics = LocalHapticFeedback.current
 
@@ -138,7 +139,7 @@ fun RoutineGrid(
                         Modifier
                             .width(12.dp)
                             .fillMaxHeight()
-                            .background(Brush.horizontalGradient(listOf(RoutineColors.Background, Color.Transparent))),
+                            .background(Brush.horizontalGradient(listOf(palette.background, Color.Transparent))),
                     )
                 }
             }
@@ -209,6 +210,7 @@ private fun DayColumn(
 
 @Composable
 private fun ProgressBadge(progress: DayProgress, modifier: Modifier = Modifier) {
+    val palette = LocalPalette.current
     val isPerfect = progress.tier == DayProgress.Tier.Perfect
     AnimatedContent(
         targetState = isPerfect,
@@ -223,7 +225,7 @@ private fun ProgressBadge(progress: DayProgress, modifier: Modifier = Modifier) 
             } else {
                 Text(
                     "${progress.percent}%",
-                    color = progress.color(),
+                    color = progress.color(palette),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.semantics { contentDescription = "${progress.percent} percent done" },
@@ -233,11 +235,11 @@ private fun ProgressBadge(progress: DayProgress, modifier: Modifier = Modifier) 
     }
 }
 
-private fun DayProgress.color(): Color = when (tier) {
+private fun DayProgress.color(palette: Palette): Color = when (tier) {
     DayProgress.Tier.NearlyThere -> RoutineColors.Mint
     DayProgress.Tier.High -> RoutineColors.Green
-    DayProgress.Tier.Medium -> RoutineColors.Rose.copy(alpha = 0.8f)
-    DayProgress.Tier.Low -> RoutineColors.Rose.copy(alpha = 0.6f)
+    DayProgress.Tier.Medium -> palette.accent.copy(alpha = 0.8f)
+    DayProgress.Tier.Low -> palette.accent.copy(alpha = 0.6f)
     DayProgress.Tier.None, DayProgress.Tier.NothingToDo, DayProgress.Tier.Perfect -> Color.White.copy(alpha = 0.4f)
 }
 
@@ -265,14 +267,15 @@ private fun DayHeader(day: LocalDate, isToday: Boolean) {
 
 @Composable
 internal fun HabitCell(habit: Habit, day: LocalDate, onClick: () -> Unit) {
+    val palette = LocalPalette.current
     val count = habit.count(day)
     val isDone = count >= habit.goal
     val shape = RoundedCornerShape(8.dp)
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val scale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "press")
-    val fill by animateColorAsState(if (isDone) RoutineColors.Rose else Color.Transparent, label = "fill")
-    val border by animateColorAsState(if (isDone) RoutineColors.Rose else RoutineColors.Maroon, label = "border")
+    val fill by animateColorAsState(if (isDone) palette.accent else Color.Transparent, label = "fill")
+    val border by animateColorAsState(if (isDone) palette.accent else palette.track, label = "border")
     val dateLabel = remember(day) { day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)) }
 
     Box(
@@ -302,7 +305,7 @@ internal fun HabitCell(habit: Habit, day: LocalDate, onClick: () -> Unit) {
             Icon(
                 RoutineIcons.Check,
                 contentDescription = null,
-                tint = if (isDone) Color.White else RoutineColors.Maroon,
+                tint = if (isDone) Color.White else palette.track,
                 modifier = Modifier.size(32.dp),
             )
         } else {
@@ -313,14 +316,15 @@ internal fun HabitCell(habit: Habit, day: LocalDate, onClick: () -> Unit) {
 
 @Composable
 private fun CounterRing(count: Int, goal: Int, strokeWidth: Dp = 5.dp) {
+    val palette = LocalPalette.current
     val progress by animateFloatAsState(count.toFloat() / goal, label = "ring")
     Box(Modifier.fillMaxSize().padding(11.dp), contentAlignment = Alignment.Center) {
         Canvas(Modifier.fillMaxSize()) {
             val stroke = strokeWidth.toPx()
             inset(stroke / 2) {
-                drawArc(RoutineColors.Maroon, startAngle = 0f, sweepAngle = 360f, useCenter = false, style = Stroke(stroke))
+                drawArc(palette.track, startAngle = 0f, sweepAngle = 360f, useCenter = false, style = Stroke(stroke))
                 drawArc(
-                    RoutineColors.Rose,
+                    palette.accent,
                     startAngle = -90f,
                     sweepAngle = 360f * progress,
                     useCenter = false,
@@ -328,6 +332,6 @@ private fun CounterRing(count: Int, goal: Int, strokeWidth: Dp = 5.dp) {
                 )
             }
         }
-        Text("$count", color = RoutineColors.Rose, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text("$count", color = palette.accent, fontSize = 18.sp, fontWeight = FontWeight.Bold)
     }
 }
