@@ -11,9 +11,10 @@ fun sampleRoutine(today: LocalDate = LocalDate.now()): Routine {
     samples.forEachIndexed { index, (name, goal) ->
         routine = routine.withHabitAdded(name, goal, start)
         val id = routine.habits.last().id
+        // A patchy first few days, then everything done for the last five.
         for (offset in 0..9) {
-            if ((offset + index) % 3 == 0 && offset <= 6) continue
-            repeat(if (goal == 1) 1 else (offset * 2) % (goal + 1)) {
+            if (offset < 5 && (offset + index) % 3 == 0) continue
+            repeat(if (goal == 1) 1 else if (offset >= 5) goal else offset + 1) {
                 routine = routine.tapped(id, start.plusDays(offset.toLong()))
             }
         }

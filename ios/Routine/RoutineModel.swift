@@ -240,8 +240,9 @@ extension RoutineModel {
         let samples: [(String, Int)] = [("Teeth AM", 1), ("Face AM", 1), ("SPF", 1), ("Shower", 1), ("Daily greens", 1), ("Water", 6)]
         for (index, (name, goal)) in samples.enumerated() {
             let habit = routine.addHabit(named: name, goal: goal, on: start)
-            for offset in 0...9 where (offset + index) % 3 != 0 || offset > 6 {
-                for _ in 0..<(goal == 1 ? 1 : (offset * 2) % (goal + 1)) {
+            // A patchy first few days, then everything done for the last five.
+            for offset in 0...9 where offset >= 5 || (offset + index) % 3 != 0 {
+                for _ in 0..<(goal == 1 ? 1 : offset >= 5 ? goal : offset + 1) {
                     routine.tap(habit.id, on: start.adding(days: offset))
                 }
             }

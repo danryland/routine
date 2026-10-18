@@ -56,7 +56,13 @@ final class PurchaseStore {
         Task {
             await loadProducts()
             await refreshEntitlements()
-            await checkFirstDownload()
+            #if !DEBUG
+            // Builds run from Xcode have no App Store receipt, and asking for
+            // one makes iOS prompt for an Apple Account sign-in.
+            if !isEarlySupporter && !defaults.bool(forKey: Self.checkedFirstDownloadKey) {
+                await checkFirstDownload()
+            }
+            #endif
         }
     }
 
@@ -95,14 +101,17 @@ final class PurchaseStore {
     /// even after reinstalling. (Sandbox and TestFlight always report "1.0", so
     /// this only runs in production.)
     func checkFirstDownload() async {
-        guard let result = try? await AppTransaction.shared,
-              case .verified(let app) = result,
-              app.environment == .production,
+        guard let result = try? await AppTransaction.shared, case .verified(let app) = result else { return }
+        // The answer never changes, so it's only needed once.
+        defaults.set(true, forKey: Self.checkedFirstDownloadKey)
+        guard app.environment == .production,
               let firstBuild = Int(app.originalAppVersion),
               firstBuild <= Self.lastCapacitorBuild
         else { return }
         markEarlySupporter()
     }
+
+    private static let checkedFirstDownloadKey = "checkedFirstDownload"
 
     func purchase(_ product: Product) async -> Outcome {
         isBusy = true
