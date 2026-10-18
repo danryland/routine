@@ -1,0 +1,76 @@
+{
+  "identifier": "7F3A9C21",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "4.99",
+      "familyShareable": true,
+      "internalID": "6740000001",
+      "localizations": [
+        {
+          "description": "Unlimited habits, widgets, reminders, iCloud sync, stats, themes and CSV export.",
+          "displayName": "Routine Pro",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "wales.ryland.routine.unlock",
+      "referenceName": "Routine Pro",
+      "type": "NonConsumable"
+    },
+    {
+      "displayPrice": "0.99",
+      "familyShareable": false,
+      "internalID": "6740000002",
+      "localizations": [
+        {
+          "description": "A little thank-you.",
+          "displayName": "Small tip",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "wales.ryland.routine.tip.small",
+      "referenceName": "Small tip",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "2.99",
+      "familyShareable": false,
+      "internalID": "6740000003",
+      "localizations": [
+        {
+          "description": "A coffee-sized thank-you.",
+          "displayName": "Medium tip",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "wales.ryland.routine.tip.medium",
+      "referenceName": "Medium tip",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "4.99",
+      "familyShareable": false,
+      "internalID": "6740000004",
+      "localizations": [
+        {
+          "description": "A generous thank-you.",
+          "displayName": "Large tip",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "wales.ryland.routine.tip.large",
+      "referenceName": "Large tip",
+      "type": "Consumable"
+    }
+  ],
+  "settings": {
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storefront": "USA"
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

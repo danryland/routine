@@ -3,6 +3,7 @@ import SwiftUI
 /// Habit names pinned on the left, one column per day scrolling sideways,
 /// opening on today.
 struct RoutineGrid: View {
+    @Environment(\.palette) private var palette
     @Environment(RoutineModel.self) private var model
 
     var body: some View {
@@ -32,7 +33,7 @@ struct RoutineGrid: View {
                     .defaultScrollAnchor(.trailing)
                     .overlay(alignment: .leading) {
                         // Cells fade out as they slide under the names.
-                        LinearGradient(colors: [.routineBackground, .routineBackground.opacity(0)], startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(colors: [palette.background, palette.background.opacity(0)], startPoint: .leading, endPoint: .trailing)
                             .frame(width: 12)
                             .allowsHitTesting(false)
                     }
@@ -131,6 +132,7 @@ private struct DayHeader: View {
 }
 
 private struct ProgressBadge: View {
+    @Environment(\.palette) private var palette
     let progress: DayProgress
 
     var body: some View {
@@ -153,16 +155,17 @@ private struct ProgressBadge: View {
 
     private var color: Color {
         switch progress.tier {
-        case .nearlyThere: .routineMint
-        case .high: .routineGreen
-        case .medium: .routineRose.opacity(0.8)
-        case .low: .routineRose.opacity(0.6)
-        case .none, .nothingToDo, .perfect: .white.opacity(0.4)
+        case .nearlyThere: Color.routineMint
+        case .high: Color.routineGreen
+        case .medium: palette.accent.opacity(0.8)
+        case .low: palette.accent.opacity(0.6)
+        case .none, .nothingToDo, .perfect: Color.white.opacity(0.4)
         }
     }
 }
 
 struct HabitCell: View {
+    @Environment(\.palette) private var palette
     let habit: Habit
     let day: Day
     let action: () -> Void
@@ -174,14 +177,14 @@ struct HabitCell: View {
         Button(action: action) {
             ZStack {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isDone ? Color.routineRose : Color.clear)
+                    .fill(isDone ? palette.accent : Color.clear)
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .strokeBorder(isDone ? Color.routineRose : Color.routineMaroon, lineWidth: 2)
+                    .strokeBorder(isDone ? palette.accent : palette.track, lineWidth: 2)
 
                 if isDone || !habit.isCounter {
                     Image(systemName: "checkmark")
                         .font(.system(size: 26, weight: .black))
-                        .foregroundStyle(isDone ? Color.white : Color.routineMaroon)
+                        .foregroundStyle(isDone ? Color.white : palette.track)
                 } else {
                     CounterRing(count: count, goal: habit.goal)
                 }
@@ -205,21 +208,22 @@ struct HabitCell: View {
 }
 
 private struct CounterRing: View {
+    @Environment(\.palette) private var palette
     let count: Int
     let goal: Int
 
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.routineMaroon, lineWidth: 5)
+                .stroke(palette.track, lineWidth: 5)
             Circle()
                 .trim(from: 0, to: CGFloat(count) / CGFloat(goal))
-                .stroke(Color.routineRose, style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .stroke(palette.accent, style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .rotationEffect(.degrees(-90))
             Text("\(count)")
                 .font(.routine(18))
                 .monospacedDigit()
-                .foregroundStyle(Color.routineRose)
+                .foregroundStyle(palette.accent)
         }
         .padding(11)
     }
@@ -228,6 +232,6 @@ private struct CounterRing: View {
 #Preview {
     RoutineGrid()
         .environment(RoutineModel.preview)
-        .background(Color.routineBackground)
+        .background(Palette.rose.background)
         .preferredColorScheme(.dark)
 }

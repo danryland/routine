@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NewHabitView: View {
     @Environment(RoutineModel.self) private var model
+    @Environment(\.palette) private var palette
     @Environment(\.dismiss) private var dismiss
     @State private var name = ""
     @State private var goal = 1
@@ -18,10 +19,11 @@ struct NewHabitView: View {
                     TextField("e.g. Drink water", text: $name)
                         .font(.routine(17, relativeTo: .body))
                         .focused($isNameFocused)
+                        .accessibilityIdentifier("newHabitName")
                         .submitLabel(.done)
                         .onSubmit(add)
                 }
-                .listRowBackground(Color.routineMaroon.opacity(0.35))
+                .listRowBackground(palette.raised)
 
                 Section {
                     Stepper(value: $goal, in: 1...20) {
@@ -32,10 +34,9 @@ struct NewHabitView: View {
                          ? "A tick box you check off once a day."
                          : "A counter that fills up each time you tap it.")
                 }
-                .listRowBackground(Color.routineMaroon.opacity(0.35))
+                .listRowBackground(palette.raised)
             }
-            .scrollContentBackground(.hidden)
-            .background(Color.routineBackground)
+            .routineBackground(palette)
             .navigationTitle("New habit")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -45,6 +46,7 @@ struct NewHabitView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Add", action: add)
                         .disabled(trimmedName.isEmpty)
+                        .accessibilityIdentifier("confirmNewHabit")
                 }
             }
             .onAppear { isNameFocused = true }

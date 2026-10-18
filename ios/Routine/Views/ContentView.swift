@@ -1,73 +1,114 @@
 import Combine
+import StoreKit
 import SwiftUI
 
 struct ContentView: View {
+    enum Sheet: String, Identifiable {
+        case editHabits, newHabit, paywall, stats, settings
+        var id: String { rawValue }
+    }
+
     @Environment(RoutineModel.self) private var model
+    @Environment(PurchaseStore.self) private var purchases
+    @Environment(\.palette) private var palette
     @Environment(\.scenePhase) private var scenePhase
-    @State private var isEditing = false
-    @State private var isAddingHabit = false
+    @Environment(\.requestReview) private var requestReview
+    @State private var sheet: Sheet?
 
     var body: some View {
         NavigationStack {
             Group {
                 if model.routine.habits.isEmpty {
-                    EmptyStateView { isAddingHabit = true }
+                    EmptyStateView { addHabit() }
                 } else {
                     RoutineGrid()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.routineBackground)
+            .background(palette.background)
             .navigationTitle("Routine")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.routineBackground, for: .navigationBar, .bottomBar)
+            .toolbarBackground(palette.background, for: .navigationBar, .bottomBar)
             .toolbarBackground(.visible, for: .navigationBar, .bottomBar)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Button {
-                        isEditing = true
+                        sheet = .editHabits
                     } label: {
                         Label("Edit habits", systemImage: "pencil")
                     }
                     .disabled(model.routine.habits.isEmpty)
+                    .accessibilityIdentifier("editHabits")
+
+                    Button {
+                        sheet = .stats
+                    } label: {
+                        Label("Stats", systemImage: "chart.bar.xaxis")
+                    }
+                    .accessibilityIdentifier("stats")
+
+                    Button {
+                        sheet = .settings
+                    } label: {
+                        Label("Settings", systemImage: "gearshape")
+                    }
+                    .accessibilityIdentifier("settings")
 
                     Spacer()
 
                     Button {
-                        isAddingHabit = true
+                        addHabit()
                     } label: {
                         Label("New habit", systemImage: "plus")
                     }
+                    .accessibilityIdentifier("newHabit")
                 }
             }
         }
-        .sheet(isPresented: $isEditing) {
-            EditHabitsView()
-                .environment(model)
-        }
-        .sheet(isPresented: $isAddingHabit) {
-            NewHabitView()
-                .environment(model)
+        .sheet(item: $sheet) { sheet in
+            Group {
+                switch sheet {
+                case .editHabits: EditHabitsView()
+                case .newHabit: NewHabitView()
+                case .paywall: PaywallView(reason: .habitLimit)
+                case .stats: StatsView()
+                case .settings: SettingsView()
+                }
+            }
+            .environment(model)
+            .environment(purchases)
+            .environment(\.palette, palette)
+            .tint(palette.accent)
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
-                model.refreshToday()
+                model.becameActive()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged).receive(on: RunLoop.main)) { _ in
-            model.refreshToday()
+            model.becameActive()
         }
+        .onChange(of: model.isReviewRequestDue) { _, due in
+            guard due else { return }
+            requestReview()
+            model.didRequestReview()
+        }
+    }
+
+    private func addHabit() {
+        sheet = model.canAddHabit ? .newHabit : .paywall
     }
 }
 
 struct EmptyStateView: View {
+    @Environment(\.palette) private var palette
     let addHabit: () -> Void
 
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.square.fill")
                 .font(.system(size: 56))
-                .foregroundStyle(Color.routineRose)
+                .foregroundStyle(palette.accent)
             Text("Build your routine")
                 .font(.routine(24, relativeTo: .title2))
             Text("Add the small things you want to do every day, then tick them off as you go.")
@@ -78,6 +119,7 @@ struct EmptyStateView: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
                 .padding(.top, 8)
+                .accessibilityIdentifier("addFirstHabit")
         }
         .padding(32)
         .frame(maxWidth: 420)
@@ -87,13 +129,13 @@ struct EmptyStateView: View {
 #Preview("Routine") {
     ContentView()
         .environment(RoutineModel.preview)
+        .environment(PurchaseStore(forceUnlocked: true))
         .preferredColorScheme(.dark)
-        .tint(.routineRose)
 }
 
 #Preview("Empty") {
     ContentView()
         .environment(RoutineModel(routine: Routine(startDate: .today()), today: .today()))
+        .environment(PurchaseStore())
         .preferredColorScheme(.dark)
-        .tint(.routineRose)
 }

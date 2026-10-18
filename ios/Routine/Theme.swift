@@ -1,24 +1,5 @@
 import SwiftUI
 
-extension Color {
-    init(hex: UInt32) {
-        self.init(
-            .sRGB,
-            red: Double((hex >> 16) & 0xFF) / 255,
-            green: Double((hex >> 8) & 0xFF) / 255,
-            blue: Double(hex & 0xFF) / 255
-        )
-    }
-
-    static let routineBackground = Color(hex: 0x150107)
-    static let routineMaroon = Color(hex: 0x4C0519)
-    static let routineRose = Color(hex: 0xF43F5E)
-    static let routineGreen = Color(hex: 0x059669)
-    static let routineMint = Color(hex: 0x08E5A0)
-    static let routineGold = Color(hex: 0xF4D849)
-    static let routineYellow = Color(hex: 0xFFD500)
-}
-
 enum Layout {
     static let cell: CGFloat = 64
     static let spacing: CGFloat = 8
@@ -53,5 +34,13 @@ struct PressableButtonStyle: ButtonStyle {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.9 : 1)
             .animation(.snappy(duration: 0.15), value: configuration.isPressed)
+    }
+}
+
+extension View {
+    /// The themed page background and list styling used by every screen.
+    func routineBackground(_ palette: Palette) -> some View {
+        scrollContentBackground(.hidden)
+            .background(palette.background)
     }
 }

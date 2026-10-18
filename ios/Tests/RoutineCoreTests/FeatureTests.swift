@@ -170,3 +170,33 @@ struct RestoreTests {
         #expect(fresh.loadReportingOrigin(today: day("2026-10-18")).origin == .new)
     }
 }
+
+struct SyncTests {
+    private let earlier = Date(timeIntervalSince1970: 1_000)
+    private let later = Date(timeIntervalSince1970: 2_000)
+
+    private func routine(_ names: String...) -> Routine {
+        var r = Routine(startDate: day("2024-08-01"))
+        for name in names { r.addHabit(named: name, on: day("2024-08-01")) }
+        return r
+    }
+
+    @Test func newestChangeWins() {
+        let mine = routine("A"), theirs = routine("B")
+        #expect(SyncDecision.decide(local: mine, localModified: earlier, remote: theirs, remoteModified: later) == .useRemote)
+        #expect(SyncDecision.decide(local: mine, localModified: later, remote: theirs, remoteModified: earlier) == .pushLocal)
+        #expect(SyncDecision.decide(local: mine, localModified: later, remote: mine, remoteModified: earlier) == .inSync)
+    }
+
+    @Test func anEmptyRoutineNeverOverwritesARealOne() {
+        // A brand-new device (newer, but empty) adopts the cloud copy.
+        #expect(SyncDecision.decide(local: routine(), localModified: later, remote: routine("A"), remoteModified: earlier) == .useRemote)
+        // And an empty cloud copy never replaces this device's habits.
+        #expect(SyncDecision.decide(local: routine("A"), localModified: earlier, remote: routine(), remoteModified: later) == .pushLocal)
+    }
+
+    @Test func firstSyncUploadsOnlyRealData() {
+        #expect(SyncDecision.decide(local: routine("A"), localModified: earlier, remote: nil, remoteModified: nil) == .pushLocal)
+        #expect(SyncDecision.decide(local: routine(), localModified: earlier, remote: nil, remoteModified: nil) == .inSync)
+    }
+}

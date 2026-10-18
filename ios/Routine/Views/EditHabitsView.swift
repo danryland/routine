@@ -3,6 +3,7 @@ import SwiftUI
 /// Rename, reorder, re-goal and delete habits.
 struct EditHabitsView: View {
     @Environment(RoutineModel.self) private var model
+    @Environment(\.palette) private var palette
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -14,14 +15,13 @@ struct EditHabitsView: View {
                     }
                     .onMove { model.moveHabits(from: $0, to: $1) }
                     .onDelete { model.removeHabits(at: $0) }
-                    .listRowBackground(Color.routineMaroon.opacity(0.35))
+                    .listRowBackground(palette.raised)
                 } footer: {
                     Text("Drag to reorder. Changing a goal never changes which past days count as done.")
                 }
             }
             .environment(\.editMode, .constant(.active))
-            .scrollContentBackground(.hidden)
-            .background(Color.routineBackground)
+            .routineBackground(palette)
             .navigationTitle("Edit habits")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -46,6 +46,7 @@ private struct EditHabitRow: View {
     var body: some View {
         HStack(spacing: 12) {
             TextField("Habit name", text: $name)
+                .accessibilityIdentifier("habitName")
                 .font(.routine(16, relativeTo: .body))
                 .submitLabel(.done)
                 .onChange(of: name) { _, newName in
@@ -58,6 +59,7 @@ private struct EditHabitRow: View {
 }
 
 struct GoalMenu: View {
+    @Environment(\.palette) private var palette
     let goal: Int
     let setGoal: (Int) -> Void
 
@@ -80,7 +82,7 @@ struct GoalMenu: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
-                .background(Capsule().fill(Color.routineMaroon))
+                .background(Capsule().fill(palette.track))
         }
         .accessibilityLabel("Daily goal")
         .accessibilityValue(GoalText.long(goal))

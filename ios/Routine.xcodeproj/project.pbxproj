@@ -6,9 +6,50 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5E0A1F2B3C4D5E6F7081921F /* RoutineWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5E0A1F2B3C4D5E6F70819214 /* RoutineWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5E0A1F2B3C4D5E6F70819223 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E0A1F2B3C4D5E6F7081920B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E0A1F2B3C4D5E6F70819206;
+			remoteInfo = Routine;
+		};
+		5E0A1F2B3C4D5E6F70819221 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E0A1F2B3C4D5E6F7081920B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E0A1F2B3C4D5E6F70819216;
+			remoteInfo = RoutineWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5E0A1F2B3C4D5E6F7081921E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5E0A1F2B3C4D5E6F7081921F /* RoutineWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5E0A1F2B3C4D5E6F70819201 /* Routine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Routine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0A1F2B3C4D5E6F70819208 /* Routine-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Routine-Info.plist"; sourceTree = "<group>"; };
+		5E0A1F2B3C4D5E6F7081922A /* Routine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Routine.entitlements; sourceTree = "<group>"; };
+		5E0A1F2B3C4D5E6F7081922D /* Routine.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Routine.storekit; sourceTree = "<group>"; };
+		5E0A1F2B3C4D5E6F70819215 /* RoutineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E0A1F2B3C4D5E6F7081922B /* RoutineWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RoutineWidget.entitlements; sourceTree = "<group>"; };
+		5E0A1F2B3C4D5E6F7081922C /* RoutineWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RoutineWidget-Info.plist"; sourceTree = "<group>"; };
+		5E0A1F2B3C4D5E6F70819214 /* RoutineWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RoutineWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -17,10 +58,39 @@
 			path = Routine;
 			sourceTree = "<group>";
 		};
+		5E0A1F2B3C4D5E6F70819213 /* RoutineUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RoutineUITests;
+			sourceTree = "<group>";
+		};
+		5E0A1F2B3C4D5E6F70819212 /* RoutineWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RoutineWidget;
+			sourceTree = "<group>";
+		};
+		5E0A1F2B3C4D5E6F70819211 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5E0A1F2B3C4D5E6F70819203 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0A1F2B3C4D5E6F7081921C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0A1F2B3C4D5E6F70819219 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -34,7 +104,14 @@
 			isa = PBXGroup;
 			children = (
 				5E0A1F2B3C4D5E6F70819202 /* Routine */,
+				5E0A1F2B3C4D5E6F70819212 /* RoutineWidget */,
+				5E0A1F2B3C4D5E6F70819211 /* Shared */,
+				5E0A1F2B3C4D5E6F70819213 /* RoutineUITests */,
 				5E0A1F2B3C4D5E6F70819208 /* Routine-Info.plist */,
+				5E0A1F2B3C4D5E6F7081922A /* Routine.entitlements */,
+				5E0A1F2B3C4D5E6F7081922C /* RoutineWidget-Info.plist */,
+				5E0A1F2B3C4D5E6F7081922B /* RoutineWidget.entitlements */,
+				5E0A1F2B3C4D5E6F7081922D /* Routine.storekit */,
 				5E0A1F2B3C4D5E6F70819205 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				5E0A1F2B3C4D5E6F70819201 /* Routine.app */,
+				5E0A1F2B3C4D5E6F70819214 /* RoutineWidgetExtension.appex */,
+				5E0A1F2B3C4D5E6F70819215 /* RoutineUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -52,18 +131,21 @@
 /* Begin PBXNativeTarget section */
 		5E0A1F2B3C4D5E6F70819206 /* Routine */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E0A1F2B3C4D5E6F70819210 /* Build configuration list for PBXNativeTarget "Routine" */;
+			buildConfigurationList = 5E0A1F2B3C4D5E6F7081920A /* Build configuration list for PBXNativeTarget "Routine" */;
 			buildPhases = (
 				5E0A1F2B3C4D5E6F70819207 /* Sources */,
 				5E0A1F2B3C4D5E6F70819203 /* Frameworks */,
 				5E0A1F2B3C4D5E6F70819209 /* Resources */,
+				5E0A1F2B3C4D5E6F7081921E /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5E0A1F2B3C4D5E6F70819220 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5E0A1F2B3C4D5E6F70819202 /* Routine */,
+				5E0A1F2B3C4D5E6F70819211 /* Shared */,
 			);
 			name = Routine;
 			packageProductDependencies = (
@@ -72,10 +154,56 @@
 			productReference = 5E0A1F2B3C4D5E6F70819201 /* Routine.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5E0A1F2B3C4D5E6F70819217 /* RoutineUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E0A1F2B3C4D5E6F70819227 /* Build configuration list for PBXNativeTarget "RoutineUITests" */;
+			buildPhases = (
+				5E0A1F2B3C4D5E6F7081921B /* Sources */,
+				5E0A1F2B3C4D5E6F7081921C /* Frameworks */,
+				5E0A1F2B3C4D5E6F7081921D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E0A1F2B3C4D5E6F70819222 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5E0A1F2B3C4D5E6F70819213 /* RoutineUITests */,
+			);
+			name = RoutineUITests;
+			packageProductDependencies = (
+			);
+			productName = RoutineUITests;
+			productReference = 5E0A1F2B3C4D5E6F70819215 /* RoutineUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5E0A1F2B3C4D5E6F70819216 /* RoutineWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E0A1F2B3C4D5E6F70819224 /* Build configuration list for PBXNativeTarget "RoutineWidgetExtension" */;
+			buildPhases = (
+				5E0A1F2B3C4D5E6F70819218 /* Sources */,
+				5E0A1F2B3C4D5E6F70819219 /* Frameworks */,
+				5E0A1F2B3C4D5E6F7081921A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5E0A1F2B3C4D5E6F70819212 /* RoutineWidget */,
+				5E0A1F2B3C4D5E6F70819211 /* Shared */,
+			);
+			name = RoutineWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = RoutineWidgetExtension;
+			productReference = 5E0A1F2B3C4D5E6F70819214 /* RoutineWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		5E0A1F2B3C4D5E6F70819211 /* Project object */ = {
+		5E0A1F2B3C4D5E6F7081920B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
@@ -85,9 +213,16 @@
 					5E0A1F2B3C4D5E6F70819206 = {
 						CreatedOnToolsVersion = 16.0;
 					};
+					5E0A1F2B3C4D5E6F70819217 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 5E0A1F2B3C4D5E6F70819206;
+					};
+					5E0A1F2B3C4D5E6F70819216 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 				};
 			};
-			buildConfigurationList = 5E0A1F2B3C4D5E6F70819212 /* Build configuration list for PBXProject "Routine" */;
+			buildConfigurationList = 5E0A1F2B3C4D5E6F7081920C /* Build configuration list for PBXProject "Routine" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -102,12 +237,28 @@
 			projectRoot = "";
 			targets = (
 				5E0A1F2B3C4D5E6F70819206 /* Routine */,
+				5E0A1F2B3C4D5E6F70819216 /* RoutineWidgetExtension */,
+				5E0A1F2B3C4D5E6F70819217 /* RoutineUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5E0A1F2B3C4D5E6F70819209 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0A1F2B3C4D5E6F7081921D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0A1F2B3C4D5E6F7081921A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,10 +275,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5E0A1F2B3C4D5E6F7081921B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0A1F2B3C4D5E6F70819218 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5E0A1F2B3C4D5E6F70819222 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E0A1F2B3C4D5E6F70819206 /* Routine */;
+			targetProxy = 5E0A1F2B3C4D5E6F70819223 /* PBXContainerItemProxy */;
+		};
+		5E0A1F2B3C4D5E6F70819220 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E0A1F2B3C4D5E6F70819216 /* RoutineWidgetExtension */;
+			targetProxy = 5E0A1F2B3C4D5E6F70819221 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		5E0A1F2B3C4D5E6F70819213 /* Debug */ = {
+		5E0A1F2B3C4D5E6F7081920D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -190,7 +368,7 @@
 			};
 			name = Debug;
 		};
-		5E0A1F2B3C4D5E6F70819214 /* Release */ = {
+		5E0A1F2B3C4D5E6F7081920E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -246,11 +424,12 @@
 			};
 			name = Release;
 		};
-		5E0A1F2B3C4D5E6F70819215 /* Debug */ = {
+		5E0A1F2B3C4D5E6F7081920F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Routine.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 62WZQM55J6;
@@ -277,11 +456,12 @@
 			};
 			name = Debug;
 		};
-		5E0A1F2B3C4D5E6F70819216 /* Release */ = {
+		5E0A1F2B3C4D5E6F70819210 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Routine.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 62WZQM55J6;
@@ -308,28 +488,130 @@
 			};
 			name = Release;
 		};
+		5E0A1F2B3C4D5E6F70819228 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 62WZQM55J6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wales.ryland.routine.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Routine;
+			};
+			name = Debug;
+		};
+		5E0A1F2B3C4D5E6F70819229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 62WZQM55J6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wales.ryland.routine.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Routine;
+			};
+			name = Release;
+		};
+		5E0A1F2B3C4D5E6F70819225 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RoutineWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 62WZQM55J6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RoutineWidget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Routine;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wales.ryland.routine.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5E0A1F2B3C4D5E6F70819226 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RoutineWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 62WZQM55J6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RoutineWidget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Routine;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wales.ryland.routine.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5E0A1F2B3C4D5E6F70819210 /* Build configuration list for PBXNativeTarget "Routine" */ = {
+		5E0A1F2B3C4D5E6F7081920A /* Build configuration list for PBXNativeTarget "Routine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E0A1F2B3C4D5E6F70819215 /* Debug */,
-				5E0A1F2B3C4D5E6F70819216 /* Release */,
+				5E0A1F2B3C4D5E6F7081920F /* Debug */,
+				5E0A1F2B3C4D5E6F70819210 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E0A1F2B3C4D5E6F70819212 /* Build configuration list for PBXProject "Routine" */ = {
+		5E0A1F2B3C4D5E6F7081920C /* Build configuration list for PBXProject "Routine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E0A1F2B3C4D5E6F70819213 /* Debug */,
-				5E0A1F2B3C4D5E6F70819214 /* Release */,
+				5E0A1F2B3C4D5E6F7081920D /* Debug */,
+				5E0A1F2B3C4D5E6F7081920E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E0A1F2B3C4D5E6F70819227 /* Build configuration list for PBXNativeTarget "RoutineUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E0A1F2B3C4D5E6F70819228 /* Debug */,
+				5E0A1F2B3C4D5E6F70819229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E0A1F2B3C4D5E6F70819224 /* Build configuration list for PBXNativeTarget "RoutineWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E0A1F2B3C4D5E6F70819225 /* Debug */,
+				5E0A1F2B3C4D5E6F70819226 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 5E0A1F2B3C4D5E6F70819211 /* Project object */;
+	rootObject = 5E0A1F2B3C4D5E6F7081920B /* Project object */;
 }

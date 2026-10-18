@@ -14,13 +14,33 @@ jobs:
       - name: Core tests
         working-directory: ios
         run: swift test
-      - name: Build app
+      - name: Build app and widget
         run: |
           xcodebuild build \
             -project ios/Routine.xcodeproj \
             -scheme Routine \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO
+      - name: UI tests in the simulator
+        run: |
+          mkdir -p "$RUNNER_TEMP/screenshots"
+          DEVICE=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = [d for runtime, ds in json.load(sys.stdin)["devices"].items() if "iOS" in runtime for d in ds]
+          names = [d["name"] for d in devices]
+          print(next((n for n in ["iPhone 16 Pro", "iPhone 16", "iPhone 15 Pro"] if n in names), next(n for n in names if n.startswith("iPhone"))))
+          ')
+          echo "Testing on $DEVICE"
+          TEST_RUNNER_SCREENSHOT_DIR="$RUNNER_TEMP/screenshots" xcodebuild test \
+            -project ios/Routine.xcodeproj \
+            -scheme Routine \
+            -destination "platform=iOS Simulator,name=$DEVICE" \
+            CODE_SIGNING_ALLOWED=NO
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-screenshots
+          path: ${{ runner.temp }}/screenshots
 
   android:
     runs-on: ubuntu-latest
